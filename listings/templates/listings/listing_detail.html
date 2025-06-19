@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{%block title%}Подробно {%endblock%}
+
+{% block content %}
+<style>
+  .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+  }
+
+  .card img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .card-info {
+    margin-top: 20px;
+  }
+
+  .card h1 {
+    margin-top: 0;
+  }
+
+  summary {
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .contact-form {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-radius: 5px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .contact-form button {
+    padding: 5px 15px;
+  }
+
+  .pdf-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2a7ae2;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+  }
+</style>
+
+
+
+
+<div class="card">
+  <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+  
+  <div class="card-info">
+    <h1>{{ listing.title }}</h1>
+    <p><strong>Цена:</strong> {{ listing.price }} ₽</p>
+    <p><strong>Город:</strong> {{ listing.city }}</p>
+
+    {% if listing.description %}
+      <p>{{ listing.description }}</p>
+    {% endif %}
+
+    {% if listing.pdf_file %}
+      <a href="{{ listing.pdf_file.url }}" target="_blank" class="pdf-button">
+        Открыть PDF-файл
+      </a>
+    {% endif %}
+
+    <details>
+      <summary>Связаться с продавцом</summary>
+      <div class="contact-form">
+        <form method="post" action="{% url 'contact:contact_seller' listing.id %}">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit">Отправить</button>
+        </form>
+      </div>
+    </details>
+  </div>
+</div>
+
+
+{% endblock %}

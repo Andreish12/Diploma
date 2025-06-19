@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{%block title%}Создать{%endblock%}
+
+{% block content %}
+<style>
+  .create-form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    border: 1px solid #ccc;
+  }
+
+  .create-form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .create-form-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .create-form-container input,
+  .create-form-container textarea,
+  .create-form-container select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  .create-form-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2a7ae2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
+  .create-form-container button:hover {
+    background-color: #1957a6;
+  }
+</style>
+
+<div class="create-form-container">
+  <h2>Создать объявление</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+  </form>
+</div>
+{% endblock %}

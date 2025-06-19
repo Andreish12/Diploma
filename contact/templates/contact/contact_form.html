@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Связаться с продавцом</title>
+</head>
+<body>
+    <h1>Связаться по объявлению: {{ listing.title }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+    <a href="/">Назад к списку</a>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{%block title%}Регистрация{%endblock%}
+
+{% block content %}
+<style>
+  .register-container {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #fafafa;
+  }
+
+  .register-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .register-container input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+  }
+
+  .register-container label {
+    font-weight: bold;
+  }
+
+  .register-container button {
+    padding: 10px 15px;
+    width: 100%;
+    background-color: #2a7ae2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .register-container button:hover {
+    background-color: #1e5bb8;
+  }
+</style>
+
+<div class="register-container">
+  <h2>Регистрация</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    
+    {% for field in form %}
+      <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}*{% endif %}</label>
+      {{ field }}
+      {{ field.errors }}
+    {% endfor %}
+
+    <button type="submit">Зарегистрироваться</button>
+  </form>
+</div>
+{% endblock %}

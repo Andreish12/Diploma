@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Объявления{% endblock %}
+
+{% block content %}
+<h1>Активные объявления</h1>
+
+    <form method="get" style="margin-bottom: 20px;">
+        <input type="text" name="q" placeholder="Название" value="{{ filters.q }}">
+        <input type="text" name="city" placeholder="Город" value="{{ filters.city }}">
+        <input type="number" name="min_price" placeholder="Мин. цена" min="0" value="{{ filters.min_price }}">
+        <input type="number" name="max_price" placeholder="Макс. цена" min="0" value="{{ filters.max_price }}">
+        <button type="submit">Поиск</button>
+    </form>
+
+
+    {% for listing in listings %}
+        <div class="card">
+            {% if listing.image %}
+                <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+            {% endif %}
+            <h2>
+                <a href="{% url 'listing_detail' listing.pk %}">{{ listing.title }}</a>
+            </h2>
+            <p class="price">{{ listing.price }} ₽</p>
+        </div>
+    {% empty %}
+        <p>Объявлений пока нет.</p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{%block title%}Мои объявления{%endblock%}
+
+{% block content %}
+<style>
+  .my-listings-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 10px;
+  }
+
+  .listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .listing-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fdfdfd;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .listing-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .listing-content {
+    padding: 10px;
+    flex-grow: 1;
+  }
+
+  .listing-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .listing-price {
+    color: #2a7ae2;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .card-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
+  }
+
+  .card-buttons a,
+  .card-buttons form button {
+    text-decoration: none;
+    padding: 6px 10px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .card-buttons a {
+    background-color: #2a7ae2;
+    color: white;
+  }
+
+  .card-buttons form button {
+    background-color: #e53935;
+    color: white;
+  }
+
+  .card-buttons a:hover {
+    background-color: #1957a6;
+  }
+
+  .card-buttons form button:hover {
+    background-color: #c62828;
+  }
+</style>
+
+<div class="my-listings-container">
+  <h2>Мои объявления</h2>
+
+  <div style="text-align: left; margin-bottom: 20px;">
+    <a href="{% url 'create_listing' %}" style="
+      background-color: #2a7ae2;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    ">Создать объявление</a>
+  </div>
+
+
+  {% if listings %}
+    <div class="listing-grid">
+      {% for listing in listings %}
+        <div class="listing-card">
+          {% if listing.image %}
+            <img src="{{ listing.image.url }}" alt="{{ listing.title }}">
+          {% else %}
+            <img src="https://via.placeholder.com/300x200?text=Нет+изображения" alt="Нет изображения">
+          {% endif %}
+
+          <div class="listing-content">
+            <div class="listing-title">{{ listing.title }}</div>
+            <div class="listing-price">{{ listing.price }} ₽</div>
+          </div>
+
+          <div class="card-buttons">
+            <a href="{% url 'listing_detail' listing.id %}">Подробнее</a>
+            <form method="post" action="{% url 'delete_listing' listing.id %}">
+              {% csrf_token %}
+              <button type="submit">Удалить</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>У вас пока нет активных объявлений.</p>
+  {% endif %}
+</div>
+{% endblock %}

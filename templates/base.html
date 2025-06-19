@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Главная{% endblock %}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+        }
+        .navbar {
+            background: #333;
+            color: white;
+            padding: 1em;
+            display: flex;
+            justify-content: space-between;
+        }
+        .navbar a {
+            color: white;
+            margin-left: 1em;
+            text-decoration: none;
+        }
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 1em;
+        }
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1em;
+            margin-bottom: 1.5em;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .card h2 {
+            margin: 0.5em 0 0.2em;
+        }
+        .card .price {
+            color: green;
+            font-weight: bold;
+        }
+
+        .message {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .message.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .message.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+
+        html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.body-wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 1em;
+}
+
+
+    </style>
+</head>
+<body>
+<div class="body-wrapper">
+    <div class="navbar">
+        <div>
+            <a href="{% url 'home' %}">Главная</a>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <a href="{% url 'my_listings' %}">{{ user.username }}</a>
+                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background:none;border:none;color:white;cursor:pointer;">Выйти</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a>
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>
+            © 2025 OnlineShop. Права вообще не защищены.
+            &nbsp;|&nbsp;
+            <a href="{% url 'siteinfo:about' %}" style="color: #ddd; text-decoration: none;">О сайте</a>
+            &nbsp;|&nbsp;
+            <a href="#" style="color: #ddd; text-decoration: none;">Контакты</a>
+            &nbsp;|&nbsp;
+            <a href="#" style="color: #ddd; text-decoration: none;">Политика конфиденциальности</a>
+        </p>
+    </footer>
+</div>
+</body>

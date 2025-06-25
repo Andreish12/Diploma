@@ -1,59 +1,83 @@
 {% extends "base.html" %}
-{%block title%}Создать{%endblock%}
+  {% block title %}Создать{% endblock %}
 
-{% block content %}
-<style>
-  .create-form-container {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
-    border-radius: 10px;
-    background-color: #fafafa;
-    border: 1px solid #ccc;
-  }
+  {% block content %}
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  .create-form-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+    .create-form-wrapper {
+      min-height: 80vh; /* Take most of the screen vertically */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .create-form-container label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+    .create-form-container {
+      width: 100%;
+      max-width: 700px;
+      padding: 40px;
+      background-color: #fefefe;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid #ddd;
+    }
 
-  .create-form-container input,
-  .create-form-container textarea,
-  .create-form-container select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
+    .create-form-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #333;
+    }
 
-  .create-form-container button {
-    width: 100%;
-    padding: 10px;
-    background-color: #2a7ae2;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-  }
+    .create-form-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: #444;
+    }
 
-  .create-form-container button:hover {
-    background-color: #1957a6;
-  }
-</style>
+    .create-form-container input,
+    .create-form-container textarea,
+    .create-form-container select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      font-size: 15px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      background-color: #fff;
+      box-sizing: border-box;
+    }
 
-<div class="create-form-container">
-  <h2>Создать объявление</h2>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-  </form>
+    .create-form-container button {
+      width: 100%;
+      padding: 12px;
+      background-color: #2a7ae2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .create-form-container button:hover {
+      background-color: #1c5cb8;
+    }
+  </style>
+
+  <div class="create-form-wrapper">
+    <div class="create-form-container">
+      <h2>Создать объявление</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Опубликовать</button>
+      </form>
+    </div>
 </div>
 {% endblock %}
